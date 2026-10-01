@@ -1,89 +1,1096 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
 <title>Dashboard | Smart Medicine AI</title>
-<link rel="stylesheet" href="css/style.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<link rel="stylesheet"
+      href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
 <style>
-.top-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;width:100%;margin-top:25px;margin-bottom:30px}
-.top-summary .card{margin:0;min-width:0;min-height:150px}
-.countdown-box{margin-top:18px;background:#eef4ff;padding:15px;border-radius:10px;text-align:center}
-.status-pending{color:orange;font-weight:600}.status-taken{color:green;font-weight:600}
-.caregiver-card{margin-top:30px;background:white;padding:25px;border-radius:15px;box-shadow:0 10px 20px rgba(0,0,0,.08)}
-.caregiver-card h2{color:#0d6efd;margin-bottom:20px}.caregiver-info{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.caregiver-info div{background:#eef4ff;padding:15px;border-radius:10px}
-.sos-card{margin-top:30px;background:white;padding:30px;border-radius:15px;text-align:center;box-shadow:0 10px 20px rgba(0,0,0,.08)}.sos-card h2{color:#dc2626;margin-bottom:10px}.sos-card p{color:#666;margin-bottom:15px}.sos-btn{padding:14px 35px;border:none;border-radius:10px;background:#dc2626;color:white;font-size:17px;font-weight:600;cursor:pointer}.sos-btn:hover{background:#b91c1c}
-@media(max-width:1100px){.top-summary{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:700px){.top-summary{grid-template-columns:1fr}.patient-grid{grid-template-columns:1fr}.caregiver-info{grid-template-columns:1fr}.navbar{flex-direction:column;align-items:flex-start;gap:15px}}
+
+.top-summary{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:20px;
+
+    width:100%;
+
+    margin-top:25px;
+
+    margin-bottom:30px;
+
+}
+
+
+.top-summary .card{
+
+    margin:0;
+
+    min-width:0;
+
+    min-height:150px;
+
+}
+
+
+.countdown-box{
+
+    margin-top:18px;
+
+    background:#eef4ff;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    text-align:center;
+
+}
+
+
+.status-pending{
+
+    color:orange;
+
+    font-weight:600;
+
+}
+
+
+.status-taken{
+
+    color:green;
+
+    font-weight:600;
+
+}
+
+
+.caregiver-card{
+
+    margin-top:30px;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:15px;
+
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+
+}
+
+
+.caregiver-card h2{
+
+    color:#0d6efd;
+
+    margin-bottom:20px;
+
+}
+
+
+.caregiver-info{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:15px;
+
+}
+
+
+.caregiver-info div{
+
+    background:#eef4ff;
+
+    padding:15px;
+
+    border-radius:10px;
+
+}
+
+
+.sos-card{
+
+    margin-top:30px;
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:15px;
+
+    text-align:center;
+
+    box-shadow:0 10px 20px rgba(0,0,0,.08);
+
+}
+
+
+.sos-card h2{
+
+    color:#dc2626;
+
+    margin-bottom:10px;
+
+}
+
+
+.sos-card p{
+
+    color:#666;
+
+    margin-bottom:15px;
+
+}
+
+
+.sos-btn{
+
+    padding:14px 35px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#dc2626;
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}
+
+
+.sos-btn:hover{
+
+    background:#b91c1c;
+
+}
+
+
+@media(max-width:1100px){
+
+    .top-summary{
+
+        grid-template-columns:
+        repeat(2,1fr);
+
+    }
+
+}
+
+
+@media(max-width:700px){
+
+    .top-summary{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .patient-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .caregiver-info{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .navbar{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:15px;
+
+    }
+
+}
+
 </style>
+
 </head>
+
+
 <body>
+
+
 <div class="dashboard">
+
+
+<!-- SIDEBAR -->
+
 <div class="sidebar">
-<h2><i class="fa-solid fa-pills"></i> Smart Medicine AI</h2>
+
+<h2>
+
+<i class="fa-solid fa-pills"></i>
+
+Smart Medicine AI
+
+</h2>
+
+
 <ul>
-<li class="active"><a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
-<li><a href="medicines.html"><i class="fa-solid fa-capsules"></i> Medicines</a></li>
-<li><a href="analytics.html"><i class="fa-solid fa-chart-line"></i> Analytics</a></li>
-<li><a href="ai.html"><i class="fa-solid fa-robot"></i> AI Assistant</a></li>
-<li><a href="caregiver.html"><i class="fa-solid fa-user-doctor"></i> Caregiver</a></li>
-<li><a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a></li>
+
+<li class="active">
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+Dashboard
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="medicines.html">
+
+<i class="fa-solid fa-capsules"></i>
+
+Medicines
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="analytics.html">
+
+<i class="fa-solid fa-chart-line"></i>
+
+Analytics
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="ai.html">
+
+<i class="fa-solid fa-robot"></i>
+
+AI Assistant
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="caregiver.html">
+
+<i class="fa-solid fa-user-doctor"></i>
+
+Caregiver
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="profile.html">
+
+<i class="fa-solid fa-user"></i>
+
+Profile
+
+</a>
+
+</li>
+
 </ul>
+
 </div>
+
+
+
+<!-- MAIN -->
+
 <div class="main">
+
+
+<!-- NAVBAR -->
+
 <div class="navbar">
+
+
 <div>
-<h1><span id="greeting">Good Morning</span> <span id="dashboardPatientName">Patient</span> 👋</h1>
-<p id="date">Loading date...</p><div id="clock">Loading time...</div>
-<p style="margin-top:5px;">Welcome to your Smart Medicine Dashboard</p>
+
+<h1>
+
+<span id="greeting">
+Good Morning
+</span>
+
+<span id="dashboardPatientName">
+Patient
+</span>
+
+👋
+
+</h1>
+
+
+<p id="date">
+Loading date...
+</p>
+
+
+<div id="clock">
+Loading time...
 </div>
-<div class="nav-icons"><i class="fa-solid fa-bell"></i><div class="profile-box"><i class="fa-solid fa-user-circle"></i><span id="topPatientName">Patient</span></div></div>
+
+
+<p style="margin-top:5px;">
+
+Welcome to your Smart Medicine Dashboard
+
+</p>
+
 </div>
+
+
+<div class="nav-icons">
+
+<i class="fa-solid fa-bell"></i>
+
+
+<div class="profile-box">
+
+<i class="fa-solid fa-user-circle"></i>
+
+<span id="topPatientName">
+Patient
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- FOUR TOP BOXES -->
+
 <div class="top-summary">
-<div class="card dashboard-card"><h3>Today's Medicines</h3><h2 id="todayMedicineCount">0</h2></div>
-<div class="card dashboard-card"><h3>Medicine Stock</h3><h2 id="medicineStock">0 Tablets</h2></div>
-<div class="card dashboard-card"><h3>Next Reminder</h3><h2 id="nextReminder">--</h2><div id="nextMedicineName" style="margin-top:6px;color:#555;"></div><div class="countdown-box"><div>Countdown</div><span id="countdown">--</span></div></div>
-<div class="card dashboard-card"><h3>Health Status</h3><h2 id="healthStatus">Stable</h2></div>
+
+
+<div class="card dashboard-card">
+
+<h3>
+Today's Medicines
+</h3>
+
+<h2 id="todayMedicineCount">
+3
+</h2>
+
 </div>
-<div class="schedule"><h2>Today's Medicine Schedule</h2><div style="overflow-x:auto;"><table><thead><tr><th>Medicine</th><th>Time</th><th>Status</th></tr></thead><tbody id="medicineTableBody"><tr><td colspan="3">Loading medicines...</td></tr></tbody></table></div></div>
-<div class="patient-card"><h2>Patient Information</h2><div class="patient-grid"><div><strong>Name:</strong> <span id="patientName">Patient</span></div><div><strong>Age:</strong> <span id="patientAge">--</span></div><div><strong>Gender:</strong> <span id="gender">--</span></div><div><strong>Blood Group:</strong> <span id="bloodGroup">--</span></div><div><strong>Disease:</strong> <span id="disease">--</span></div><div><strong>Doctor:</strong> <span id="doctor">--</span></div></div></div>
-<div class="caregiver-card"><h2>Caregiver Information</h2><div class="caregiver-info"><div><strong>Caregiver:</strong> <span id="caregiverName">Not Added</span></div><div><strong>Mobile:</strong> <span id="caregiverNumber">Not Added</span></div></div></div>
-<div class="sos-card"><h2><i class="fa-solid fa-triangle-exclamation"></i> Emergency SOS</h2><p>If you need immediate assistance, contact your caregiver.</p><button class="sos-btn" onclick="sendSOS()"><i class="fa-solid fa-phone"></i> Emergency SOS</button></div>
-<footer style="text-align:center;margin-top:40px;color:#666;"><hr style="margin-bottom:20px;"><p>© 2026 Smart Medicine AI | AI-Based Medicine Reminder System</p></footer>
-</div></div>
+
+
+
+<div class="card dashboard-card">
+
+<h3>
+Medicine Stock
+</h3>
+
+<h2 id="medicineStock">
+3 Tablets
+</h2>
+
+</div>
+
+
+
+<div class="card dashboard-card">
+
+<h3>
+Next Reminder
+</h3>
+
+<h2 id="nextReminder">
+--
+</h2>
+
+<div id="nextMedicineName"
+     style="margin-top:6px;color:#555;">
+
+</div>
+
+
+<div class="countdown-box">
+
+<div>
+Countdown
+</div>
+
+<span id="countdown">
+--
+</span>
+
+</div>
+
+</div>
+
+
+
+<div class="card dashboard-card">
+
+<h3>
+Health Status
+</h3>
+
+<h2 id="healthStatus">
+Stable
+</h2>
+
+</div>
+
+</div>
+
+
+
+<!-- MEDICINE SCHEDULE -->
+
+<div class="schedule">
+
+<h2>
+Today's Medicine Schedule
+</h2>
+
+
+<div style="overflow-x:auto;">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Medicine
+</th>
+
+<th>
+Time
+</th>
+
+<th>
+Status
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="medicineTableBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+
+<!-- PATIENT INFORMATION -->
+
+<div class="patient-card">
+
+<h2>
+Patient Information
+</h2>
+
+
+<div class="patient-grid">
+
+
+<div>
+
+<strong>Name:</strong>
+
+<span id="patientName">
+Patient
+</span>
+
+</div>
+
+
+<div>
+
+<strong>Age:</strong>
+
+<span id="patientAge">
+--
+</span>
+
+</div>
+
+
+<div>
+
+<strong>Gender:</strong>
+
+<span id="gender">
+--
+</span>
+
+</div>
+
+
+<div>
+
+<strong>Blood Group:</strong>
+
+<span id="bloodGroup">
+--
+</span>
+
+</div>
+
+
+<div>
+
+<strong>Disease:</strong>
+
+<span id="disease">
+--
+</span>
+
+</div>
+
+
+<div>
+
+<strong>Doctor:</strong>
+
+<span id="doctor">
+--
+</span>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- CAREGIVER -->
+
+<div class="caregiver-card">
+
+<h2>
+Caregiver Information
+</h2>
+
+
+<div class="caregiver-info">
+
+
+<div>
+
+<strong>Caregiver:</strong>
+
+<span id="caregiverName">
+Not Added
+</span>
+
+</div>
+
+
+<div>
+
+<strong>Mobile:</strong>
+
+<span id="caregiverNumber">
+Not Added
+</span>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- SOS -->
+
+<div class="sos-card">
+
+<h2>
+
+<i class="fa-solid fa-triangle-exclamation"></i>
+
+Emergency SOS
+
+</h2>
+
+
+<p>
+If you need immediate assistance,
+contact your caregiver.
+</p>
+
+
+<button
+class="sos-btn"
+onclick="sendSOS()">
+
+<i class="fa-solid fa-phone"></i>
+
+Emergency SOS
+
+</button>
+
+</div>
+
+
+
+<footer
+style="text-align:center;margin-top:40px;color:#666;">
+
+<hr style="margin-bottom:20px;">
+
+<p>
+© 2026 Smart Medicine AI |
+AI-Based Medicine Reminder System
+</p>
+
+</footer>
+
+
+</div>
+
+</div>
+
+
+
 <script src="js/script.js"></script>
-<script type="module">
-import { db } from "./js/firebase.js";
-import { collection,getDocs } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-const PATIENT_ID="P001";
-function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;}
-function timeFor(m){if(m.time)return m.time;if(m.compartment==="Afternoon")return "14:00";if(m.compartment==="Evening")return "18:00";if(m.compartment==="Night")return "20:00";return "08:00";}
-function fmt(t){if(!t||t==="--:--")return "--:--";let [h,m]=t.split(":");h=Number(h);const ap=h>=12?"PM":"AM";h=h%12||12;return `${h}:${m} ${ap}`;}
-function minutes(t){if(!t)return 9999;const [h,m]=t.split(":").map(Number);return h*60+m;}
-function render(meds,taken){
- const body=document.getElementById("medicineTableBody");body.innerHTML="";
- meds.forEach((m,i)=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${m.name}</td><td>${fmt(m.time)}</td><td><span class="${taken.has(m.id)?"status-taken":"status-pending"}">${taken.has(m.id)?"✔ Taken":"⏰ Pending"}</span></td>`;body.appendChild(tr);});
- if(!meds.length)body.innerHTML='<tr><td colspan="3">No medicines found.</td></tr>';
+
+
+<script>
+
+function loadDashboard(){
+
+    const name =
+        localStorage.getItem("patientName")
+        || "Patient";
+
+    const age =
+        localStorage.getItem("patientAge")
+        || "--";
+
+    const gender =
+        localStorage.getItem("gender")
+        || "--";
+
+    const blood =
+        localStorage.getItem("bloodGroup")
+        || "--";
+
+    const disease =
+        localStorage.getItem("disease")
+        || "--";
+
+    const doctor =
+        localStorage.getItem("doctor")
+        || "--";
+
+    const caregiver =
+        localStorage.getItem("caregiverName")
+        || "Not Added";
+
+    const caregiverNumber =
+        localStorage.getItem("caregiverNumber")
+        || "Not Added";
+
+
+    document.getElementById(
+        "dashboardPatientName"
+    ).textContent = name;
+
+
+    document.getElementById(
+        "topPatientName"
+    ).textContent = name;
+
+
+    document.getElementById(
+        "patientName"
+    ).textContent = name;
+
+
+    document.getElementById(
+        "patientAge"
+    ).textContent = age + " Years";
+
+
+    document.getElementById(
+        "gender"
+    ).textContent = gender;
+
+
+    document.getElementById(
+        "bloodGroup"
+    ).textContent = blood;
+
+
+    document.getElementById(
+        "disease"
+    ).textContent = disease;
+
+
+    document.getElementById(
+        "doctor"
+    ).textContent = doctor;
+
+
+    document.getElementById(
+        "caregiverName"
+    ).textContent = caregiver;
+
+
+    document.getElementById(
+        "caregiverNumber"
+    ).textContent = caregiverNumber;
+
+
+
+    const medicines =
+        getMedicines();
+
+
+    document.getElementById(
+        "todayMedicineCount"
+    ).textContent =
+        medicines.length;
+
+
+    document.getElementById(
+        "medicineStock"
+    ).textContent =
+        medicines.length + " Tablets";
+
+
+
+    const body =
+        document.getElementById(
+            "medicineTableBody"
+        );
+
+
+    body.innerHTML = "";
+
+
+    const takenData =
+        getTakenMedicines();
+
+
+    const today =
+        todayDate();
+
+
+    let takenCount = 0;
+
+
+    medicines.forEach(
+        function(medicine){
+
+            const taken =
+                takenData[today] &&
+                takenData[today][medicine.id];
+
+
+            if(taken){
+                takenCount++;
+            }
+
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML =
+
+                "<td>" +
+                medicine.name +
+                "</td>" +
+
+                "<td>" +
+                formatMedicineTime(
+                    medicine.time
+                ) +
+                "</td>" +
+
+                "<td>" +
+
+                (
+                    taken
+
+                    ?
+
+                    '<span class="status-taken">✔ Taken</span>'
+
+                    :
+
+                    '<span class="status-pending">⏰ Pending</span>'
+                )
+
+                +
+
+                "</td>";
+
+
+            body.appendChild(row);
+
+        }
+    );
+
+
+
+    document.getElementById(
+        "healthStatus"
+    ).textContent =
+
+        takenCount === medicines.length
+
+        ? "Stable"
+
+        : "Needs Attention";
+
+
+
+    /* NEXT REMINDER */
+
+    const now =
+        new Date();
+
+
+    const currentMinutes =
+        now.getHours() * 60 +
+        now.getMinutes();
+
+
+    let next =
+        null;
+
+
+    medicines.forEach(
+        function(medicine){
+
+            const parts =
+                medicine.time.split(":");
+
+            const mins =
+                Number(parts[0]) * 60 +
+                Number(parts[1]);
+
+
+            if(
+                mins >= currentMinutes &&
+                !next
+            ){
+
+                next = medicine;
+
+            }
+
+        }
+    );
+
+
+    if(!next){
+
+        next = medicines[0];
+
+    }
+
+
+    if(next){
+
+        document.getElementById(
+            "nextReminder"
+        ).textContent =
+            formatMedicineTime(
+                next.time
+            );
+
+
+        document.getElementById(
+            "nextMedicineName"
+        ).textContent =
+            next.name;
+
+
+        startCountdown(
+            next.time
+        );
+
+    }
+
 }
-async function loadDashboard(){
- try{
-  const [ms,ds]=await Promise.all([getDocs(collection(db,"Medicines")),getDocs(collection(db,"Dose History"))]);
-  const meds=[];ms.forEach(x=>{const m=x.data();if(m.patientId===PATIENT_ID&&meds.length<3)meds.push({id:x.id,name:m.name||"Medicine",stock:Number(m.stock)||0,compartment:m.compartment||"Morning",time:timeFor(m)});});
-  meds.sort((a,b)=>minutes(a.time)-minutes(b.time));
-  const taken=new Set();ds.forEach(x=>{const d=x.data();if(d.patientId===PATIENT_ID&&d.date===today()&&d.status==="TAKEN")taken.add(d.medicineId);});
-  render(meds,taken);
-  document.getElementById("todayMedicineCount").textContent=meds.length;
-  document.getElementById("medicineStock").textContent=meds.reduce((s,m)=>s+(m.stock||0),0)+" Tablets";
-  const now=new Date();const current=now.getHours()*60+now.getMinutes();const next=meds.find(m=>minutes(m.time)>=current)||meds[0];
-  if(next){document.getElementById("nextReminder").textContent=fmt(next.time);document.getElementById("nextMedicineName").textContent=next.name;}
-  document.getElementById("healthStatus").textContent=taken.size===meds.length&&meds.length?"Stable":"Needs Attention";
-  updateCountdown(next);
- }catch(e){console.error(e);document.getElementById("medicineTableBody").innerHTML='<tr><td colspan="3" style="color:red">Unable to load medicines.</td></tr>';}
+
+
+let countdownInterval;
+
+
+function startCountdown(time){
+
+    clearInterval(
+        countdownInterval
+    );
+
+
+    function update(){
+
+        const parts =
+            time.split(":");
+
+
+        const target =
+            new Date();
+
+
+        target.setHours(
+            Number(parts[0]),
+            Number(parts[1]),
+            0,
+            0
+        );
+
+
+        const now =
+            new Date();
+
+
+        if(target <= now){
+
+            target.setDate(
+                target.getDate() + 1
+            );
+
+        }
+
+
+        const difference =
+            Math.floor(
+                (target - now) / 1000
+            );
+
+
+        const hours =
+            Math.floor(
+                difference / 3600
+            );
+
+
+        const minutes =
+            Math.floor(
+                (difference % 3600) / 60
+            );
+
+
+        const seconds =
+            difference % 60;
+
+
+        document.getElementById(
+            "countdown"
+        ).textContent =
+
+            String(hours).padStart(2,"0")
+            + ":" +
+
+            String(minutes).padStart(2,"0")
+            + ":" +
+
+            String(seconds).padStart(2,"0");
+
+    }
+
+
+    update();
+
+
+    countdownInterval =
+        setInterval(
+            update,
+            1000
+        );
+
 }
-function updateCountdown(next){if(!next){document.getElementById("countdown").textContent="--";return;}function tick(){const [h,m]=next.time.split(":").map(Number);const now=new Date();let target=new Date(now);target.setHours(h,m,0,0);if(target<=now)target.setDate(target.getDate()+1);let s=Math.max(0,Math.floor((target-now)/1000));const hh=Math.floor(s/3600),mm=Math.floor((s%3600)/60),ss=s%60;document.getElementById("countdown").textContent=`${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}:${String(ss).padStart(2,"0")}`;}tick();setInterval(tick,1000);}
-window.addEventListener("load",()=>{const fields={patientName:"patientName",patientAge:"patientAge",gender:"gender",bloodGroup:"bloodGroup",disease:"disease",doctor:"doctor",caregiverName:"caregiverName",caregiverNumber:"caregiverNumber"};Object.entries(fields).forEach(([id,key])=>{const el=document.getElementById(id);if(el){const v=localStorage.getItem(key);if(v)el.textContent=id==="patientAge"?v+" Years":v;}});const n=localStorage.getItem("patientName")||"Patient";document.getElementById("dashboardPatientName").textContent=n;document.getElementById("topPatientName").textContent=n;loadDashboard();});
-window.addEventListener("focus",loadDashboard);document.addEventListener("visibilitychange",()=>{if(!document.hidden)loadDashboard();});
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadDashboard
+);
+
+
+window.addEventListener(
+    "storage",
+    loadDashboard
+);
+
+
+window.addEventListener(
+    "medicineStatusChanged",
+    loadDashboard
+);
+
 </script>
-</body></html>
+
+</body>
+</html>

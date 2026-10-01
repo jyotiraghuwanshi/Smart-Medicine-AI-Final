@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,101 +9,115 @@
 
 <link rel="stylesheet" href="css/style.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
-
 body{
+    font-family:Poppins,sans-serif;
     background:#eef5ff;
     display:flex;
     justify-content:center;
     align-items:center;
     min-height:100vh;
-    padding:30px 0;
+    margin:0;
+    padding:20px;
+    box-sizing:border-box;
 }
 
 .login-box{
-    width:430px;
-    background:#fff;
-    padding:35px;
+    background:#ffffff;
+    padding:30px;
+    width:420px;
+    max-width:100%;
     border-radius:18px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.15);
+    box-shadow:0 8px 20px rgba(0,0,0,0.12);
+    box-sizing:border-box;
 }
 
-.login-box h1{
+h1{
     text-align:center;
     color:#0d6efd;
-    margin-bottom:8px;
+    margin-top:0;
+    margin-bottom:5px;
 }
 
-.login-box p{
+.subtitle{
     text-align:center;
     color:#666;
     margin-bottom:25px;
 }
 
-.input-group{
-    margin-bottom:15px;
+.section-title{
+    color:#0d6efd;
+    font-size:18px;
+    margin-top:20px;
+    margin-bottom:8px;
+    border-bottom:1px solid #dce8f8;
+    padding-bottom:6px;
 }
 
-.input-group label{
+label{
     display:block;
-    margin-bottom:6px;
+    font-size:14px;
     font-weight:500;
+    margin-top:10px;
     color:#333;
 }
 
-.input-group input{
+input{
     width:100%;
-    padding:12px;
-    border:1px solid #d9d9d9;
+    padding:11px;
+    margin-top:5px;
+    border:1px solid #ccc;
     border-radius:8px;
-    font-size:15px;
+    box-sizing:border-box;
+    font-family:Poppins,sans-serif;
+}
+
+input:focus{
     outline:none;
-    transition:.3s;
-}
-
-.input-group input:focus{
     border-color:#0d6efd;
-    box-shadow:0 0 5px rgba(13,110,253,.3);
 }
 
-.section-title{
-    margin-top:25px;
-    margin-bottom:15px;
-    padding-bottom:8px;
-    border-bottom:2px solid #eef5ff;
-    color:#0d6efd;
-    font-size:18px;
-    font-weight:600;
+.medicine-row{
+    display:grid;
+    grid-template-columns:1fr 130px;
+    gap:10px;
 }
 
-.login-btn{
+button{
     width:100%;
-    padding:14px;
+    padding:13px;
+    margin-top:25px;
     background:#0d6efd;
     color:#fff;
-    font-size:16px;
-    font-weight:600;
     border:none;
     border-radius:8px;
+    font-size:16px;
+    font-family:Poppins,sans-serif;
     cursor:pointer;
-    transition:.3s;
-    margin-top:10px;
 }
 
-.login-btn:hover{
+button:hover{
     background:#0b5ed7;
+}
+
+@media(max-width:500px){
+
+    .login-box{
+        padding:22px;
+    }
+
+    .medicine-row{
+        grid-template-columns:1fr;
+        gap:0;
+    }
+
 }
 
 </style>
@@ -114,413 +127,230 @@ body{
 
 <body>
 
-
 <div class="login-box">
 
+    <h1>
+        <i class="fa-solid fa-pills"></i>
+        Smart Medicine AI
+    </h1>
+
+    <p class="subtitle">
+        Patient Registration
+    </p>
+
+
+    <!-- ================= PATIENT INFORMATION ================= -->
+
+    <div class="section-title">
+        Patient Information
+    </div>
+
+    <label>Patient Name</label>
+    <input
+        id="patientName"
+        type="text"
+        placeholder="Enter patient name"
+    >
+
+    <label>Age</label>
+    <input
+        id="patientAge"
+        type="number"
+        placeholder="Enter age"
+    >
+
+    <label>Gender</label>
+    <input
+        id="gender"
+        type="text"
+        placeholder="Enter gender"
+    >
+
+    <label>Blood Group</label>
+    <input
+        id="bloodGroup"
+        type="text"
+        placeholder="e.g. B+"
+    >
 
-<h1>
+    <label>Height</label>
+    <input
+        id="height"
+        type="text"
+        placeholder="Height in cm"
+    >
 
-<i class="fa-solid fa-pills"></i>
+    <label>Weight</label>
+    <input
+        id="weight"
+        type="text"
+        placeholder="Weight in kg"
+    >
 
-Smart Medicine AI
+    <label>Disease</label>
+    <input
+        id="disease"
+        type="text"
+        placeholder="Enter disease"
+    >
 
-</h1>
+    <label>Doctor's Name</label>
+    <input
+        id="doctor"
+        type="text"
+        placeholder="Enter doctor's name"
+    >
 
 
-<p>
-Patient Registration
-</p>
+    <!-- ================= CAREGIVER ================= -->
 
+    <div class="section-title">
+        Caregiver Information
+    </div>
 
+    <label>Caregiver Name</label>
+    <input
+        id="caregiverName"
+        type="text"
+        placeholder="Enter caregiver name"
+    >
 
-<!-- ================= PATIENT INFORMATION ================= -->
+    <label>Caregiver Mobile Number</label>
+    <input
+        id="caregiverNumber"
+        type="tel"
+        placeholder="Enter mobile number"
+    >
 
-<div class="section-title">
-Patient Information
-</div>
 
+    <!-- ================= MEDICINES ================= -->
 
-<div class="input-group">
+    <div class="section-title">
+        Medicine Information
+    </div>
 
-<label>
-Patient Name
-</label>
 
-<input
-type="text"
-id="patientName"
-placeholder="Enter Patient Name">
+    <!-- MEDICINE 1 -->
 
-</div>
+    <label>Medicine 1</label>
 
+    <div class="medicine-row">
 
-<div class="input-group">
+        <input
+            id="medicine1"
+            type="text"
+            placeholder="Medicine name"
+        >
 
-<label>
-Age
-</label>
+        <input
+            id="medicine1Time"
+            type="time"
+        >
 
-<input
-type="number"
-id="patientAge"
-placeholder="Enter Age">
+    </div>
 
-</div>
 
+    <!-- MEDICINE 2 -->
 
-<div class="input-group">
+    <label>Medicine 2</label>
 
-<label>
-Gender
-</label>
+    <div class="medicine-row">
 
-<input
-type="text"
-id="gender"
-placeholder="Male / Female">
+        <input
+            id="medicine2"
+            type="text"
+            placeholder="Medicine name"
+        >
 
-</div>
+        <input
+            id="medicine2Time"
+            type="time"
+        >
 
+    </div>
 
-<div class="input-group">
 
-<label>
-Blood Group
-</label>
+    <!-- MEDICINE 3 -->
 
-<input
-type="text"
-id="bloodGroup"
-placeholder="Example: B+">
+    <label>Medicine 3</label>
 
-</div>
+    <div class="medicine-row">
 
+        <input
+            id="medicine3"
+            type="text"
+            placeholder="Medicine name"
+        >
 
-<div class="input-group">
+        <input
+            id="medicine3Time"
+            type="time"
+        >
 
-<label>
-Height (cm)
-</label>
+    </div>
 
-<input
-type="number"
-id="height"
-placeholder="Enter Height">
 
-</div>
+    <!-- ================= BUTTON ================= -->
 
-
-<div class="input-group">
-
-<label>
-Weight (kg)
-</label>
-
-<input
-type="number"
-id="weight"
-placeholder="Enter Weight">
-
-</div>
-
-
-<div class="input-group">
-
-<label>
-Disease
-</label>
-
-<input
-type="text"
-id="disease"
-placeholder="Example: Alzheimer's Disease">
-
-</div>
-
-
-
-<!-- ================= DOCTOR ================= -->
-
-<div class="section-title">
-Doctor Information
-</div>
-
-
-<div class="input-group">
-
-<label>
-Doctor Name
-</label>
-
-<input
-type="text"
-id="doctor"
-placeholder="Enter Doctor Name">
-
-</div>
-
-
-
-<!-- ================= THREE MEDICINES ================= -->
-
-<div class="section-title">
-Medicine Information
-</div>
-
-
-<!-- MEDICINE 1 -->
-
-<div class="input-group">
-
-<label>
-Medicine 1
-</label>
-
-<input
-type="text"
-id="medicine1"
-placeholder="Example: BP Tablet">
-
-</div>
-
-
-<div class="input-group">
-
-<label>
-Medicine 1 Time
-</label>
-
-<input
-type="time"
-id="medicine1Time">
+    <button onclick="loginUser()">
+        <i class="fa-solid fa-arrow-right"></i>
+        Continue to Dashboard
+    </button>
 
 </div>
-
-
-<!-- MEDICINE 2 -->
-
-<div class="input-group">
-
-<label>
-Medicine 2
-</label>
-
-<input
-type="text"
-id="medicine2"
-placeholder="Example: Vitamin D">
-
-</div>
-
-
-<div class="input-group">
-
-<label>
-Medicine 2 Time
-</label>
-
-<input
-type="time"
-id="medicine2Time">
-
-</div>
-
-
-<!-- MEDICINE 3 -->
-
-<div class="input-group">
-
-<label>
-Medicine 3
-</label>
-
-<input
-type="text"
-id="medicine3"
-placeholder="Example: Memory Tablet">
-
-</div>
-
-
-<div class="input-group">
-
-<label>
-Medicine 3 Time
-</label>
-
-<input
-type="time"
-id="medicine3Time">
-
-</div>
-
-
-
-<!-- ================= CAREGIVER ================= -->
-
-<div class="section-title">
-Caregiver Information
-</div>
-
-
-<div class="input-group">
-
-<label>
-Caregiver Name
-</label>
-
-<input
-type="text"
-id="caregiverName"
-placeholder="Enter Caregiver Name">
-
-</div>
-
-
-<div class="input-group">
-
-<label>
-Caregiver Mobile Number
-</label>
-
-<input
-type="tel"
-id="caregiverNumber"
-placeholder="Enter Mobile Number">
-
-</div>
-
-
-
-<!-- ================= LOGIN BUTTON ================= -->
-
-<button
-class="login-btn"
-onclick="loginUser()">
-
-<i class="fa-solid fa-right-to-bracket"></i>
-
-Register & Continue
-
-</button>
-
-
-</div>
-
 
 
 <script>
 
 function loginUser(){
 
-/* ================= PATIENT INFORMATION ================= */
+    const ids = [
 
-localStorage.setItem(
-    "patientName",
-    document.getElementById("patientName").value
-);
+        "patientName",
+        "patientAge",
+        "gender",
+        "bloodGroup",
+        "height",
+        "weight",
+        "disease",
+        "doctor",
 
-localStorage.setItem(
-    "patientAge",
-    document.getElementById("patientAge").value
-);
+        "caregiverName",
+        "caregiverNumber",
 
-localStorage.setItem(
-    "gender",
-    document.getElementById("gender").value
-);
+        "medicine1",
+        "medicine1Time",
 
-localStorage.setItem(
-    "bloodGroup",
-    document.getElementById("bloodGroup").value
-);
+        "medicine2",
+        "medicine2Time",
 
-localStorage.setItem(
-    "height",
-    document.getElementById("height").value
-);
+        "medicine3",
+        "medicine3Time"
 
-localStorage.setItem(
-    "weight",
-    document.getElementById("weight").value
-);
-
-localStorage.setItem(
-    "disease",
-    document.getElementById("disease").value
-);
+    ];
 
 
-/* ================= DOCTOR ================= */
+    // Save all information
 
-localStorage.setItem(
-    "doctor",
-    document.getElementById("doctor").value
-);
+    for(const id of ids){
 
+        const element = document.getElementById(id);
 
-/* ================= MEDICINE 1 ================= */
+        localStorage.setItem(
+            id,
+            element.value.trim()
+        );
 
-localStorage.setItem(
-    "medicine1",
-    document.getElementById("medicine1").value
-);
-
-localStorage.setItem(
-    "medicine1Time",
-    document.getElementById("medicine1Time").value
-);
+    }
 
 
-/* ================= MEDICINE 2 ================= */
+    // Open dashboard
 
-localStorage.setItem(
-    "medicine2",
-    document.getElementById("medicine2").value
-);
-
-localStorage.setItem(
-    "medicine2Time",
-    document.getElementById("medicine2Time").value
-);
-
-
-/* ================= MEDICINE 3 ================= */
-
-localStorage.setItem(
-    "medicine3",
-    document.getElementById("medicine3").value
-);
-
-localStorage.setItem(
-    "medicine3Time",
-    document.getElementById("medicine3Time").value
-);
-
-
-/* ================= CAREGIVER ================= */
-
-localStorage.setItem(
-    "caregiverName",
-    document.getElementById("caregiverName").value
-);
-
-localStorage.setItem(
-    "caregiverNumber",
-    document.getElementById("caregiverNumber").value
-);
-
-
-alert("Registration Successful!");
-
-
-window.location.href =
-    "dashboard.html";
+    window.location.href = "dashboard.html";
 
 }
 
 </script>
-
 
 </body>
 

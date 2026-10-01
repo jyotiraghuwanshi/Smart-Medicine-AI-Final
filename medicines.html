@@ -1,16 +1,561 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Medicines | Smart Medicine AI</title><link rel="stylesheet" href="css/style.css"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"><style>
-.main{margin-left:250px;min-height:100vh;padding:35px 30px}.sidebar{position:fixed;left:0;top:0;width:250px;height:100vh;z-index:1000}.navbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}.search-box{margin-bottom:25px}.search-box input{width:100%;max-width:400px;padding:12px 15px;border-radius:10px;border:1px solid #ddd;font-family:Poppins,sans-serif;outline:none}.schedule{width:100%;box-sizing:border-box;overflow-x:auto}.schedule table{width:100%;border-collapse:collapse;min-width:700px}.schedule th,.schedule td{padding:15px;text-align:center}.take-btn,.untake-btn{padding:8px 18px;border:none;border-radius:7px;cursor:pointer;font-family:Poppins,sans-serif;font-weight:500}.take-btn{background:#0d6efd;color:white}.take-btn:hover{background:#0056d2}.untake-btn{background:#dc2626;color:white}.untake-btn:hover{background:#b91c1c}.status-taken{color:green;font-weight:600}.status-pending{color:orange;font-weight:600}@media(max-width:800px){.sidebar{width:210px}.main{margin-left:210px}}@media(max-width:600px){.sidebar{position:relative;width:100%;height:auto}.main{margin-left:0;padding:20px}}
-</style></head><body>
-<div class="sidebar"><h2><i class="fa-solid fa-pills"></i> Smart Medicine AI</h2><ul><li><a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a></li><li class="active"><a href="medicines.html"><i class="fa-solid fa-capsules"></i> Medicines</a></li><li><a href="analytics.html"><i class="fa-solid fa-chart-line"></i> Analytics</a></li><li><a href="ai.html"><i class="fa-solid fa-robot"></i> AI Assistant</a></li><li><a href="caregiver.html"><i class="fa-solid fa-user-doctor"></i> Caregiver</a></li><li><a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a></li></ul></div>
-<div class="main"><div class="navbar"><div><h1>Medicines 💊</h1><p>Manage all prescribed medicines</p></div><div class="nav-icons"><i class="fa-solid fa-bell"></i><div class="profile-box"><i class="fa-solid fa-user-circle"></i><span id="topPatientName">Patient</span></div></div></div>
-<div class="search-box"><input type="text" id="medicineSearch" placeholder="🔍 Search medicine..."></div>
-<div class="schedule"><h2>Medicine List</h2><table><thead><tr><th>Medicine</th><th>Dosage</th><th>Time</th><th>Status</th><th>Action</th></tr></thead><tbody id="medicineTableBody"><tr><td colspan="5">Loading medicines...</td></tr></tbody></table></div></div>
-<script src="js/script.js"></script><script type="module">
-import {db} from "./js/firebase.js";import {collection,getDocs,addDoc,deleteDoc} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";const PATIENT_ID="P001";
-function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;}function timeFor(m){if(m.time)return m.time;if(m.compartment==="Afternoon")return"14:00";if(m.compartment==="Evening")return"18:00";if(m.compartment==="Night")return"20:00";return"08:00";}function fmt(t){if(!t)return"--";let[h,m]=t.split(":");h=Number(h);return`${h%12||12}:${m} ${h>=12?"PM":"AM"}`;}function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
-async function load(){const table=document.getElementById("medicineTableBody");try{const [ms,ds]=await Promise.all([getDocs(collection(db,"Medicines")),getDocs(collection(db,"Dose History"))]);const meds=[];ms.forEach(x=>{const m=x.data();if(m.patientId===PATIENT_ID&&meds.length<3)meds.push({id:x.id,name:m.name||"Medicine",stock:Number(m.stock)||0,compartment:m.compartment||"Morning",time:timeFor(m)});});meds.sort((a,b)=>a.time.localeCompare(b.time));const taken=new Set();ds.forEach(x=>{const d=x.data();if(d.patientId===PATIENT_ID&&d.date===today()&&d.status==="TAKEN")taken.add(d.medicineId);});table.innerHTML="";meds.forEach(m=>{const tr=document.createElement("tr");tr.dataset.id=m.id;tr.innerHTML=`<td>${esc(m.name)}</td><td>1 Tablet</td><td>${fmt(m.time)}</td><td class="medicine-status">${taken.has(m.id)?'<span class="status-taken">✔ Taken</span>':'<span class="status-pending">⏰ Pending</span>'}</td><td>${taken.has(m.id)?`<button class="untake-btn" onclick="untakeMedicine('${m.id}','${esc(m.name)}')">Untake</button>`:`<button class="take-btn" onclick="markMedicineTaken(this,'${m.id}','${esc(m.name)}','${esc(m.compartment)}')">Take</button>`}</td>`;table.appendChild(tr);});if(!meds.length)table.innerHTML='<tr><td colspan="5">No medicines found.</td></tr>';}catch(e){console.error(e);table.innerHTML='<tr><td colspan="5" style="color:red">Unable to load medicines.</td></tr>';}}
-window.markMedicineTaken=async function(btn,id,name,compartment){btn.disabled=true;btn.textContent="Saving...";try{const now=new Date();await addDoc(collection(db,"Dose History"),{actualTime:`${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`,date:today(),medicineId:id,medicineName:name,patientId:PATIENT_ID,scheduledTime:timeFor({compartment}),status:"TAKEN"});await load();}catch(e){console.error(e);alert("Unable to save medicine status.\n\n"+e.message);btn.disabled=false;btn.textContent="Take";}};
-window.untakeMedicine=async function(id,name){if(!confirm(`Mark ${name} as NOT TAKEN again?`))return;try{const snap=await getDocs(collection(db,"Dose History"));const jobs=[];snap.forEach(d=>{const x=d.data();if(x.patientId===PATIENT_ID&&x.date===today()&&x.medicineId===id&&x.status==="TAKEN")jobs.push(deleteDoc(d.ref));});await Promise.all(jobs);await load();}catch(e){console.error(e);alert("Unable to undo medicine status.\n\n"+e.message);}};
-document.getElementById("medicineSearch").addEventListener("input",function(){const q=this.value.toLowerCase().trim();document.querySelectorAll("#medicineTableBody tr").forEach(r=>{const n=r.cells[0]?.textContent.toLowerCase()||"";r.style.display=n.includes(q)?"":"none";});});window.addEventListener("load",()=>{const n=localStorage.getItem("patientName")||"Patient";document.getElementById("topPatientName").textContent=n;load();});window.addEventListener("focus",load);document.addEventListener("visibilitychange",()=>{if(!document.hidden)load();});
-</script></body></html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Medicines | Smart Medicine AI</title>
+
+<link rel="stylesheet"
+href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+<style>
+
+.medicine-search{
+
+    width:400px;
+
+    max-width:100%;
+
+    padding:14px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    margin-bottom:20px;
+
+}
+
+
+.medicine-status{
+
+    font-weight:600;
+
+}
+
+
+.take-btn,
+.untake-btn{
+
+    padding:10px 20px;
+
+    border:none;
+
+    border-radius:8px;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+
+.take-btn{
+
+    background:#2563eb;
+
+}
+
+
+.take-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+
+.untake-btn{
+
+    background:#f59e0b;
+
+}
+
+
+.untake-btn:hover{
+
+    background:#d97706;
+
+}
+
+
+.status-taken{
+
+    color:#16a34a;
+
+}
+
+
+.status-pending{
+
+    color:#f59e0b;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<div class="sidebar">
+
+<h2>
+
+<i class="fa-solid fa-pills"></i>
+
+Smart Medicine AI
+
+</h2>
+
+
+<ul>
+
+<li>
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+Dashboard
+
+</a>
+
+</li>
+
+
+<li class="active">
+
+<a href="medicines.html">
+
+<i class="fa-solid fa-capsules"></i>
+
+Medicines
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="analytics.html">
+
+<i class="fa-solid fa-chart-line"></i>
+
+Analytics
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="ai.html">
+
+<i class="fa-solid fa-robot"></i>
+
+AI Assistant
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="caregiver.html">
+
+<i class="fa-solid fa-user-doctor"></i>
+
+Caregiver
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="profile.html">
+
+<i class="fa-solid fa-user"></i>
+
+Profile
+
+</a>
+
+</li>
+
+</ul>
+
+</div>
+
+
+
+<div class="main">
+
+
+<div class="navbar">
+
+
+<div>
+
+<h1>
+
+Medicines 💊
+
+</h1>
+
+<p>
+Manage all prescribed medicines
+</p>
+
+</div>
+
+
+<div class="nav-icons">
+
+<i class="fa-solid fa-bell"></i>
+
+
+<div class="profile-box">
+
+<i class="fa-solid fa-user-circle"></i>
+
+<span id="topPatientName">
+Patient
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<input
+type="text"
+id="medicineSearch"
+class="medicine-search"
+placeholder="🔍 Search medicine...">
+
+
+
+<div class="schedule">
+
+
+<h2>
+Medicine List
+</h2>
+
+
+<div style="overflow-x:auto;">
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Medicine
+</th>
+
+<th>
+Dosage
+</th>
+
+<th>
+Time
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Action
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="medicineTableBody">
+
+</tbody>
+
+</table>
+
+
+</div>
+
+</div>
+
+
+
+<footer
+style="text-align:center;margin-top:40px;color:#666;">
+
+<hr style="margin-bottom:20px;">
+
+<p>
+© 2026 Smart Medicine AI |
+AI-Based Medicine Reminder System
+</p>
+
+</footer>
+
+
+</div>
+
+</div>
+
+
+<script src="js/script.js"></script>
+
+
+<script>
+
+function loadMedicines(){
+
+    const name =
+        localStorage.getItem(
+            "patientName"
+        ) || "Patient";
+
+
+    document.getElementById(
+        "topPatientName"
+    ).textContent = name;
+
+
+
+    const medicines =
+        getMedicines();
+
+
+    const takenData =
+        getTakenMedicines();
+
+
+    const today =
+        todayDate();
+
+
+    const table =
+        document.getElementById(
+            "medicineTableBody"
+        );
+
+
+    table.innerHTML = "";
+
+
+    medicines.forEach(
+        function(medicine){
+
+            const taken =
+                takenData[today] &&
+                takenData[today][medicine.id];
+
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML =
+
+                "<td>" +
+                medicine.name +
+                "</td>" +
+
+                "<td>1 Tablet</td>" +
+
+                "<td>" +
+                formatMedicineTime(
+                    medicine.time
+                ) +
+                "</td>" +
+
+                "<td class='medicine-status'>" +
+
+                (
+                    taken
+
+                    ?
+
+                    '<span class="status-taken">✔ Taken</span>'
+
+                    :
+
+                    '<span class="status-pending">⏰ Pending</span>'
+                )
+
+                +
+
+                "</td>" +
+
+                "<td>" +
+
+                (
+                    taken
+
+                    ?
+
+                    '<button class="untake-btn" onclick="undoMedicine(\'' +
+                    medicine.id +
+                    '\')">Untake</button>'
+
+                    :
+
+                    '<button class="take-btn" onclick="takeMedicine(\'' +
+                    medicine.id +
+                    '\')">Take</button>'
+                )
+
+                +
+
+                "</td>";
+
+
+            table.appendChild(row);
+
+        }
+    );
+
+}
+
+
+function takeMedicine(id){
+
+    markMedicineTaken(id);
+
+    loadMedicines();
+
+}
+
+
+function undoMedicine(id){
+
+    const medicines =
+        getMedicines();
+
+
+    const medicine =
+        medicines.find(
+            function(m){
+                return m.id === id;
+            }
+        );
+
+
+    const medicineName =
+        medicine
+        ? medicine.name
+        : "this medicine";
+
+
+    if(
+        !confirm(
+            "Mark " +
+            medicineName +
+            " as NOT TAKEN?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    unTakeMedicine(id);
+
+    loadMedicines();
+
+}
+
+
+document.getElementById(
+    "medicineSearch"
+).addEventListener(
+    "input",
+    function(){
+
+        const search =
+            this.value
+            .toLowerCase()
+            .trim();
+
+
+        document.querySelectorAll(
+            "#medicineTableBody tr"
+        ).forEach(
+            function(row){
+
+                const name =
+                    row.cells[0]
+                    ?.textContent
+                    .toLowerCase()
+                    || "";
+
+
+                row.style.display =
+                    name.includes(search)
+                    ? ""
+                    : "none";
+
+            }
+        );
+
+    }
+);
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadMedicines
+);
+
+
+window.addEventListener(
+    "medicineStatusChanged",
+    loadMedicines
+);
+
+
+window.addEventListener(
+    "storage",
+    loadMedicines
+);
+
+</script>
+
+</body>
+
+</html>

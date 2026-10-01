@@ -1,13 +1,610 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Analytics | Smart Medicine AI</title><link rel="stylesheet" href="css/style.css"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></head><body>
-<div class="dashboard"><div class="sidebar"><h2><i class="fa-solid fa-pills"></i> Smart Medicine AI</h2><ul><li><a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a></li><li><a href="medicines.html"><i class="fa-solid fa-capsules"></i> Medicines</a></li><li class="active"><a href="analytics.html"><i class="fa-solid fa-chart-line"></i> Analytics</a></li><li><a href="ai.html"><i class="fa-solid fa-robot"></i> AI Assistant</a></li><li><a href="caregiver.html"><i class="fa-solid fa-user-doctor"></i> Caregiver</a></li><li><a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a></li></ul></div>
-<div class="main"><div class="navbar"><div><h1>Analytics 📈</h1><p>Medicine Adherence Report</p></div><div class="nav-icons"><i class="fa-solid fa-bell"></i><div class="profile-box"><i class="fa-solid fa-user-circle"></i><span id="topPatientName">Patient</span></div></div></div>
-<div class="cards"><div class="card"><h3>Total Doses</h3><h2 id="totalDoses">0</h2></div><div class="card"><h3>Taken</h3><h2 id="takenDoses">0</h2></div><div class="card"><h3>Missed</h3><h2 id="missedDoses">0</h2></div><div class="card"><h3>Adherence</h3><h2 id="adherence">0%</h2></div></div>
-<div class="schedule"><h2>Weekly Medicine Report</h2><div style="overflow-x:auto;"><table><thead><tr><th>Day</th><th>Medicines Taken</th><th>Adherence</th></tr></thead><tbody id="weeklyReport"><tr><td colspan="3">Loading analytics...</td></tr></tbody></table></div></div>
-<footer style="text-align:center;margin-top:40px;color:#666;"><hr style="margin-bottom:20px;"><p>© 2026 Smart Medicine AI | AI-Based Medicine Reminder System</p></footer></div></div>
-<script src="js/script.js"></script><script type="module">
-import{db}from"./js/firebase.js";import{collection,getDocs}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";const PATIENT_ID="P001";const name=localStorage.getItem("patientName")||"Patient";document.getElementById("topPatientName").textContent=name;
-function dateStr(d){return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;}function monday(d){const x=new Date(d);const day=x.getDay();x.setDate(x.getDate()-(day===0?6:day-1));x.setHours(0,0,0,0);return x;}
-async function load(){try{const[ms,ds]=await Promise.all([getDocs(collection(db,"Medicines")),getDocs(collection(db,"Dose History"))]);const meds=[];ms.forEach(x=>{const m=x.data();if(m.patientId===PATIENT_ID&&meds.length<3)meds.push(x.id);});const active=new Set(meds);const taken={};ds.forEach(x=>{const d=x.data();if(d.patientId!==PATIENT_ID||d.status!=="TAKEN"||!active.has(d.medicineId)||!d.date)return;if(!taken[d.date])taken[d.date]=new Set();taken[d.date].add(d.medicineId);});const start=monday(new Date());let total=0,took=0;const days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];const body=document.getElementById("weeklyReport");body.innerHTML="";for(let i=0;i<7;i++){const d=new Date(start);d.setDate(start.getDate()+i);const dsx=dateStr(d);const future=d>new Date();const expected=future?0:meds.length;const got=future?0:Math.min(taken[dsx]?.size||0,meds.length);const pct=expected?Math.round(got/expected*100):0;total+=expected;took+=got;const tr=document.createElement("tr");tr.innerHTML=`<td>${days[i]}</td><td>${future?"--":got+" / "+expected}</td><td style="font-weight:600;color:${pct>=80?"#16a34a":pct>=50?"#f59e0b":"#dc2626"}">${future?"--":pct+"%"}</td>`;body.appendChild(tr);}document.getElementById("totalDoses").textContent=total;document.getElementById("takenDoses").textContent=took;document.getElementById("missedDoses").textContent=Math.max(total-took,0);document.getElementById("adherence").textContent=(total?Math.round(took/total*100):0)+"%";}catch(e){console.error(e);document.getElementById("weeklyReport").innerHTML='<tr><td colspan="3" style="color:red">Unable to load analytics.</td></tr>';}}
-load();window.addEventListener("focus",load);document.addEventListener("visibilitychange",()=>{if(!document.hidden)load();});
-</script></body></html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Analytics | Smart Medicine AI</title>
+
+<link rel="stylesheet"
+href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<div class="sidebar">
+
+<h2>
+
+<i class="fa-solid fa-pills"></i>
+
+Smart Medicine AI
+
+</h2>
+
+
+<ul>
+
+<li>
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+Dashboard
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="medicines.html">
+
+<i class="fa-solid fa-capsules"></i>
+
+Medicines
+
+</a>
+
+</li>
+
+
+<li class="active">
+
+<a href="analytics.html">
+
+<i class="fa-solid fa-chart-line"></i>
+
+Analytics
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="ai.html">
+
+<i class="fa-solid fa-robot"></i>
+
+AI Assistant
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="caregiver.html">
+
+<i class="fa-solid fa-user-doctor"></i>
+
+Caregiver
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="profile.html">
+
+<i class="fa-solid fa-user"></i>
+
+Profile
+
+</a>
+
+</li>
+
+</ul>
+
+</div>
+
+
+
+<div class="main">
+
+
+<div class="navbar">
+
+
+<div>
+
+<h1>
+Analytics 📈
+</h1>
+
+<p>
+Medicine Adherence Report
+</p>
+
+</div>
+
+
+<div class="nav-icons">
+
+<i class="fa-solid fa-bell"></i>
+
+
+<div class="profile-box">
+
+<i class="fa-solid fa-user-circle"></i>
+
+<span id="topPatientName">
+Patient
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<h3>
+Total Doses
+</h3>
+
+<h2 id="totalDoses">
+0
+</h2>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Taken
+</h3>
+
+<h2 id="takenDoses">
+0
+</h2>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Missed
+</h3>
+
+<h2 id="missedDoses">
+0
+</h2>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Adherence
+</h3>
+
+<h2 id="adherence">
+0%
+</h2>
+
+</div>
+
+
+</div>
+
+
+
+<div class="schedule">
+
+
+<h2>
+Weekly Medicine Report
+</h2>
+
+
+<div style="overflow-x:auto;">
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Day
+</th>
+
+<th>
+Medicines Taken
+</th>
+
+<th>
+Adherence
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="weeklyReport">
+
+</tbody>
+
+</table>
+
+
+</div>
+
+</div>
+
+
+
+<footer
+style="text-align:center;margin-top:40px;color:#666;">
+
+<hr style="margin-bottom:20px;">
+
+<p>
+© 2026 Smart Medicine AI |
+AI-Based Medicine Reminder System
+</p>
+
+</footer>
+
+
+</div>
+
+</div>
+
+
+<script src="js/script.js"></script>
+
+
+<script>
+
+function loadAnalytics(){
+
+    const patientName =
+        localStorage.getItem(
+            "patientName"
+        ) || "Patient";
+
+
+    document.getElementById(
+        "topPatientName"
+    ).textContent =
+        patientName;
+
+
+
+    const medicines =
+        getMedicines();
+
+
+    const takenData =
+        getTakenMedicines();
+
+
+    const today =
+        todayDate();
+
+
+    const takenToday =
+        takenData[today] || {};
+
+
+    let takenCount = 0;
+
+
+    medicines.forEach(
+        function(medicine){
+
+            if(
+                takenToday[medicine.id]
+            ){
+
+                takenCount++;
+
+            }
+
+        }
+    );
+
+
+    const total =
+        medicines.length;
+
+
+    const missed =
+        Math.max(
+            total - takenCount,
+            0
+        );
+
+
+    const adherence =
+        total > 0
+
+        ?
+
+        Math.round(
+            (takenCount / total) * 100
+        )
+
+        :
+
+        0;
+
+
+
+    document.getElementById(
+        "totalDoses"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "takenDoses"
+    ).textContent =
+        takenCount;
+
+
+    document.getElementById(
+        "missedDoses"
+    ).textContent =
+        missed;
+
+
+    document.getElementById(
+        "adherence"
+    ).textContent =
+        adherence + "%";
+
+
+
+    /* WEEKLY REPORT */
+
+    const body =
+        document.getElementById(
+            "weeklyReport"
+        );
+
+
+    body.innerHTML = "";
+
+
+    const days = [
+
+        "Monday",
+
+        "Tuesday",
+
+        "Wednesday",
+
+        "Thursday",
+
+        "Friday",
+
+        "Saturday",
+
+        "Sunday"
+
+    ];
+
+
+    const now =
+        new Date();
+
+
+    const currentDay =
+        now.getDay();
+
+
+    const mondayOffset =
+        currentDay === 0
+        ? -6
+        : 1 - currentDay;
+
+
+
+    for(
+        let i = 0;
+        i < 7;
+        i++
+    ){
+
+        const date =
+            new Date();
+
+
+        date.setDate(
+            now.getDate() +
+            mondayOffset +
+            i
+        );
+
+
+        const year =
+            date.getFullYear();
+
+
+        const month =
+            String(
+                date.getMonth() + 1
+            ).padStart(2,"0");
+
+
+        const day =
+            String(
+                date.getDate()
+            ).padStart(2,"0");
+
+
+        const dateKey =
+            year +
+            "-" +
+            month +
+            "-" +
+            day;
+
+
+        const dayData =
+            takenData[dateKey] || {};
+
+
+        let dayTaken = 0;
+
+
+        medicines.forEach(
+            function(medicine){
+
+                if(
+                    dayData[
+                        medicine.id
+                    ]
+                ){
+
+                    dayTaken++;
+
+                }
+
+            }
+        );
+
+
+        const isFuture =
+            date > now;
+
+
+        const expected =
+            isFuture
+            ? 0
+            : total;
+
+
+        const percentage =
+            expected > 0
+
+            ?
+
+            Math.round(
+                (dayTaken / expected) * 100
+            )
+
+            :
+
+            0;
+
+
+        const row =
+            document.createElement(
+                "tr"
+            );
+
+
+        row.innerHTML =
+
+            "<td>" +
+            days[i] +
+            "</td>" +
+
+            "<td>" +
+
+            (
+                isFuture
+
+                ?
+
+                "--"
+
+                :
+
+                dayTaken +
+                " / " +
+                expected
+            )
+
+            +
+
+            "</td>" +
+
+            "<td style='font-weight:600;'>" +
+
+            (
+                isFuture
+
+                ?
+
+                "--"
+
+                :
+
+                percentage +
+                "%"
+            )
+
+            +
+
+            "</td>";
+
+
+        body.appendChild(row);
+
+    }
+
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadAnalytics
+);
+
+
+window.addEventListener(
+    "medicineStatusChanged",
+    loadAnalytics
+);
+
+
+window.addEventListener(
+    "storage",
+    loadAnalytics
+);
+
+</script>
+
+</body>
+
+</html>
