@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login | Smart Medicine AI</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+
+background:#eef5ff;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+min-height:100vh;
+
+}
+
+.login-box{
+
+width:430px;
+
+background:#fff;
+
+padding:35px;
+
+border-radius:18px;
+
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
+
+}
+
+.login-box h1{
+
+text-align:center;
+
+color:#0d6efd;
+
+margin-bottom:8px;
+
+}
+
+.login-box p{
+
+text-align:center;
+
+color:#666;
+
+margin-bottom:25px;
+
+}
+
+.input-group{
+
+margin-bottom:15px;
+
+}
+
+.input-group label{
+
+display:block;
+
+margin-bottom:6px;
+
+font-weight:500;
+
+color:#333;
+
+}
+
+.input-group input{
+
+width:100%;
+
+padding:12px;
+
+border:1px solid #d9d9d9;
+
+border-radius:8px;
+
+font-size:15px;
+
+outline:none;
+
+transition:.3s;
+
+}
+
+.input-group input:focus{
+
+border-color:#0d6efd;
+
+box-shadow:0 0 5px rgba(13,110,253,.3);
+
+}
+
+.login-btn{
+
+width:100%;
+
+padding:14px;
+
+background:#0d6efd;
+
+color:#fff;
+
+font-size:16px;
+
+font-weight:600;
+
+border:none;
+
+border-radius:8px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.login-btn:hover{
+
+background:#0b5ed7;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+<h1>
+
+<i class="fa-solid fa-pills"></i>
+
+Smart Medicine AI
+
+</h1>
+
+<p>Patient Registration</p>
+
+<div class="input-group">
+
+<label>Patient Name</label>
+
+<input
+type="text"
+id="patientName"
+placeholder="Enter Patient Name">
+
+</div>
+
+<div class="input-group">
+
+<label>Age</label>
+
+<input
+type="number"
+id="patientAge"
+placeholder="Enter Age">
+
+</div>
+
+<div class="input-group">
+
+<label>Gender</label>
+
+<input
+type="text"
+id="gender"
+placeholder="Male / Female">
+
+</div>
+
+<div class="input-group">
+
+<label>Blood Group</label>
+
+<input
+type="text"
+id="bloodGroup"
+placeholder="Example: B+">
+
+</div>
+<div class="input-group">
+
+<label>Height (cm)</label>
+
+<input
+type="number"
+id="height"
+placeholder="Enter Height">
+
+</div>
+
+<div class="input-group">
+
+<label>Weight (kg)</label>
+
+<input
+type="number"
+id="weight"
+placeholder="Enter Weight">
+
+</div>
+
+<div class="input-group">
+
+<label>Disease</label>
+
+<input
+type="text"
+id="disease"
+placeholder="Example: Alzheimer's Disease">
+
+</div>
+
+<div class="input-group">
+
+<label>Caregiver Name</label>
+
+<input
+type="text"
+id="caregiverName"
+placeholder="Enter Caregiver Name">
+
+</div>
+
+<div class="input-group">
+
+<label>Caregiver Mobile Number</label>
+
+<input
+type="tel"
+id="caregiverNumber"
+placeholder="Enter Mobile Number">
+
+</div>
+
+<button
+class="login-btn"
+onclick="loginUser()">
+
+Login
+
+</button>
+
+</div>
+
+<script>
+
+function loginUser(){
+
+localStorage.setItem(
+"patientName",
+document.getElementById("patientName").value
+);
+
+localStorage.setItem(
+"patientAge",
+document.getElementById("patientAge").value
+);
+
+localStorage.setItem(
+"gender",
+document.getElementById("gender").value
+);
+
+localStorage.setItem(
+"bloodGroup",
+document.getElementById("bloodGroup").value
+);
+
+localStorage.setItem(
+"height",
+document.getElementById("height").value
+);
+
+localStorage.setItem(
+"weight",
+document.getElementById("weight").value
+);
+
+localStorage.setItem(
+"disease",
+document.getElementById("disease").value
+);
+
+localStorage.setItem(
+"caregiverName",
+document.getElementById("caregiverName").value
+);
+
+localStorage.setItem(
+"caregiverNumber",
+document.getElementById("caregiverNumber").value
+);
+alert("Login Successful!");
+
+window.location.href = "dashboard.html";
+
+}
+
+</script>
+
+</body>
+
+</html>

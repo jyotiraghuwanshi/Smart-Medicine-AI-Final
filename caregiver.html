@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Caregiver | Smart Medicine AI</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<div class="sidebar">
+
+<h2>
+<i class="fa-solid fa-pills"></i>
+Smart Medicine AI
+</h2>
+
+
+<ul>
+    <li>
+    <a href="ai.html">
+        <i class="fa-solid fa-robot"></i>
+        AI Assistant
+    </a>
+</li>
+
+<li><a href="dashboard.html">
+<i class="fa-solid fa-house"></i> Dashboard
+</a></li>
+
+
+<li><a href="medicines.html">
+<i class="fa-solid fa-capsules"></i> Medicines
+</a></li>
+
+
+<li><a href="analytics.html">
+<i class="fa-solid fa-chart-line"></i> Analytics
+</a></li>
+
+
+<li class="active"><a href="caregiver.html">
+<i class="fa-solid fa-user-doctor"></i> Caregiver
+</a></li>
+
+
+<li><a href="profile.html">
+<i class="fa-solid fa-user"></i> Profile
+</a></li>
+
+
+</ul>
+
+</div>
+
+
+
+<div class="main">
+
+
+<div class="navbar">
+
+<div>
+
+<h1>Caregiver Support 👨‍👩‍👧</h1>
+
+<p>Emergency contact and communication</p>
+
+</div>
+
+
+<div class="nav-icons">
+
+<i class="fa-solid fa-bell"></i>
+
+<i class="fa-solid fa-user-circle"></i>
+
+</div>
+
+</div>
+
+
+
+
+<div class="patient-card">
+
+
+<h2>Caregiver Information</h2>
+
+
+<div class="patient-grid">
+
+
+<div>
+<strong>Name:</strong>
+<span id="caregiverName">Not Added</span>
+</div>
+
+
+<div>
+<strong>Mobile:</strong>
+<span id="caregiverNumber">Not Added</span>
+</div>
+
+
+</div>
+
+
+<br>
+
+
+<button class="take-btn" onclick="callCaregiver()">
+
+📞 Call Caregiver
+
+</button>
+
+
+
+<button class="take-btn" onclick="sendSMS()">
+
+💬 Send SMS
+
+</button>
+
+
+
+</div>
+
+
+
+<footer style="text-align:center; margin-top:40px; color:#666;">
+
+<hr>
+
+<p>
+© 2026 Smart Medicine AI | AI-Based Medicine Reminder System
+</p>
+
+</footer>
+
+
+
+</div>
+
+</div>
+
+
+
+<script src="js/script.js"></script>
+
+
+
+<script>
+
+
+window.onload=function(){
+
+
+let name=localStorage.getItem("caregiverName");
+
+let number=localStorage.getItem("caregiverNumber");
+
+
+if(name){
+
+document.getElementById("caregiverName").innerHTML=name;
+
+}
+
+
+if(number){
+
+document.getElementById("caregiverNumber").innerHTML=number;
+
+}
+
+
+}
+
+
+
+function callCaregiver(){
+
+
+let number=localStorage.getItem("caregiverNumber");
+
+
+if(number){
+
+window.location.href="tel:"+number;
+
+}
+
+else{
+
+alert("Please add caregiver number first");
+
+}
+
+
+}
+
+
+
+function sendSMS(){
+
+
+let number=localStorage.getItem("caregiverNumber");
+
+
+if(number){
+
+window.location.href=
+"sms:"+number+"?body=Patient needs assistance.";
+
+}
+
+else{
+
+alert("Please add caregiver number first");
+
+}
+
+
+}
+
+
+</script>
+
+
+
+</body>
+
+</html>

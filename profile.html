@@ -1,0 +1,816 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Profile | Smart Medicine AI</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    z-index: 1000;
+}
+
+.main {
+    margin-left: 250px;
+    min-height: 100vh;
+    padding: 35px 30px 50px;
+    width: calc(100% - 250px);
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.navbar h1 {
+    margin: 0 0 5px;
+}
+
+.navbar p {
+    margin: 5px 0;
+}
+
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.nav-icons > i {
+    color: #0d6efd;
+    font-size: 22px;
+}
+
+/* =========================
+   PATIENT CARD
+========================= */
+
+.patient-card {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+}
+
+.patient-card h2 {
+    color: #0d6efd;
+    margin-top: 0;
+}
+
+.patient-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.patient-grid > div {
+    background: #eef5ff;
+    padding: 14px;
+    border-radius: 10px;
+    word-break: break-word;
+}
+
+.patient-grid strong {
+    color: #222;
+}
+
+/* =========================
+   HEALTH CARDS
+========================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.card i {
+    color: #0d6efd;
+}
+
+.card h3 {
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.card h2 {
+    color: #0d6efd;
+}
+
+/* =========================
+   MEDICAL NOTES
+========================= */
+
+.schedule {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    overflow-x: auto;
+}
+
+.schedule h2 {
+    color: #0d6efd;
+    margin-top: 0;
+}
+
+.schedule table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.schedule th {
+    background: #0d6efd;
+    color: white;
+    padding: 14px;
+    text-align: center;
+}
+
+.schedule td {
+    padding: 14px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+
+    .cards {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+@media (max-width: 800px) {
+
+    .sidebar {
+        width: 210px;
+    }
+
+    .main {
+        margin-left: 210px;
+        width: calc(100% - 210px);
+        padding: 25px 20px 40px;
+    }
+
+    .patient-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<div class="sidebar">
+
+    <h2>
+
+        <i class="fa-solid fa-pills"></i>
+
+        Smart Medicine AI
+
+    </h2>
+
+
+    <ul>
+        <li>
+    <a href="ai.html">
+        <i class="fa-solid fa-robot"></i>
+        AI Assistant
+    </a>
+</li>
+
+        <li>
+
+            <a href="dashboard.html">
+
+                <i class="fa-solid fa-house"></i>
+
+                Dashboard
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="medicines.html">
+
+                <i class="fa-solid fa-capsules"></i>
+
+                Medicines
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="analytics.html">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Analytics
+
+            </a>
+
+        </li>
+
+
+        <li>
+
+            <a href="caregiver.html">
+
+                <i class="fa-solid fa-user-doctor"></i>
+
+                Caregiver
+
+            </a>
+
+        </li>
+
+
+        <li class="active">
+
+            <a href="profile.html">
+
+                <i class="fa-solid fa-user"></i>
+
+                Profile
+
+            </a>
+
+        </li>
+
+    </ul>
+
+</div>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="main">
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <div class="navbar">
+
+        <div>
+
+            <h1>
+                Patient Profile 👤
+            </h1>
+
+            <p>
+                Personal & Medical Information
+            </p>
+
+        </div>
+
+
+        <div class="nav-icons">
+
+            <i class="fa-solid fa-bell"></i>
+
+            <i class="fa-solid fa-user-circle"></i>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         PATIENT DETAILS
+    ========================= -->
+
+    <div class="patient-card">
+
+        <h2>
+            Patient Details
+        </h2>
+
+
+        <div class="patient-grid">
+
+
+            <div>
+
+                <strong>Name:</strong>
+
+                <span id="patientName">
+                    --
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>Age:</strong>
+
+                <span id="patientAge">
+                    --
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>Gender:</strong>
+
+                <span id="gender">
+                    --
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>Blood Group:</strong>
+
+                <span id="bloodGroup">
+                    --
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>Disease:</strong>
+
+                <span id="disease">
+                    --
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>Doctor:</strong>
+
+                <span id="doctor">
+                    --
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>Height:</strong>
+
+                <span id="height">
+                    --
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>Weight:</strong>
+
+                <span id="weight">
+                    --
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>Caregiver:</strong>
+
+                <span id="caregiverName">
+                    --
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>Caregiver Mobile:</strong>
+
+                <span id="caregiverNumber">
+                    --
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         HEALTH CARDS
+    ========================= -->
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <i class="fa-solid fa-heart-pulse fa-2x"></i>
+
+            <h3>
+                Health Status
+            </h3>
+
+            <h2>
+                Stable
+            </h2>
+
+        </div>
+
+
+        <div class="card">
+
+            <i class="fa-solid fa-pills fa-2x"></i>
+
+            <h3>
+                Medicines
+            </h3>
+
+            <h2>
+                4 Active
+            </h2>
+
+        </div>
+
+
+        <div class="card">
+
+            <i class="fa-solid fa-calendar-check fa-2x"></i>
+
+            <h3>
+                Appointments
+            </h3>
+
+            <h2>
+                2 Upcoming
+            </h2>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         MEDICAL NOTES
+    ========================= -->
+
+    <div class="schedule">
+
+        <h2>
+            Medical Notes
+        </h2>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Doctor's Notes
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+
+                    <td>
+                        30 Jul 2026
+                    </td>
+
+                    <td>
+                        Patient is responding well to medication.
+                        Continue current prescription.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        20 Jul 2026
+                    </td>
+
+                    <td>
+                        Regular exercise and daily medicine reminders
+                        are recommended.
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer
+        style="
+            text-align:center;
+            margin-top:40px;
+            color:#666;
+        ">
+
+        <hr style="margin-bottom:20px;">
+
+        <p>
+            © 2026 Smart Medicine AI |
+            AI-Based Medicine Reminder System
+        </p>
+
+    </footer>
+
+
+</div>
+
+
+<script src="js/script.js"></script>
+
+
+<script>
+
+/* =====================================================
+   LOAD PATIENT DETAILS FROM LOGIN
+===================================================== */
+
+window.addEventListener(
+    "load",
+    function() {
+
+
+        const patientName =
+            localStorage.getItem(
+                "patientName"
+            );
+
+
+        const patientAge =
+            localStorage.getItem(
+                "patientAge"
+            );
+
+
+        const gender =
+            localStorage.getItem(
+                "gender"
+            );
+
+
+        const bloodGroup =
+            localStorage.getItem(
+                "bloodGroup"
+            );
+
+
+        const disease =
+            localStorage.getItem(
+                "disease"
+            );
+
+
+        const doctor =
+            localStorage.getItem(
+                "doctor"
+            );
+
+
+        const height =
+            localStorage.getItem(
+                "height"
+            );
+
+
+        const weight =
+            localStorage.getItem(
+                "weight"
+            );
+
+
+        const caregiverName =
+            localStorage.getItem(
+                "caregiverName"
+            );
+
+
+        const caregiverNumber =
+            localStorage.getItem(
+                "caregiverNumber"
+            );
+
+
+        setProfileText(
+            "patientName",
+            patientName || "--"
+        );
+
+
+        setProfileText(
+            "patientAge",
+            patientAge
+                ? patientAge + " Years"
+                : "--"
+        );
+
+
+        setProfileText(
+            "gender",
+            gender || "--"
+        );
+
+
+        setProfileText(
+            "bloodGroup",
+            bloodGroup || "--"
+        );
+
+
+        setProfileText(
+            "disease",
+            disease || "--"
+        );
+
+
+        setProfileText(
+            "doctor",
+            doctor || "--"
+        );
+
+
+        setProfileText(
+            "height",
+            height
+                ? height + " cm"
+                : "--"
+        );
+
+
+        setProfileText(
+            "weight",
+            weight
+                ? weight + " kg"
+                : "--"
+        );
+
+
+        setProfileText(
+            "caregiverName",
+            caregiverName || "--"
+        );
+
+
+        setProfileText(
+            "caregiverNumber",
+            caregiverNumber || "--"
+        );
+
+
+        /* PAGE TITLE */
+
+        if (patientName) {
+
+            document.title =
+                patientName +
+                " | Smart Medicine AI";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   SAFE PROFILE TEXT
+===================================================== */
+
+function setProfileText(
+    id,
+    value
+) {
+
+    const element =
+        document.getElementById(id);
+
+
+    if (element) {
+
+        element.textContent =
+            value;
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>
+```

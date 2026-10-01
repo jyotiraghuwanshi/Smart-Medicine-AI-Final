@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Kukku | AI Healthcare Assistant</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+.ai-page{
+    min-height:100vh;
+    display:flex;
+}
+
+.ai-main{
+    flex:1;
+    padding:30px;
+}
+
+.ai-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.ai-header h1{
+    color:#0d6efd;
+    margin-bottom:5px;
+}
+
+.ai-header p{
+    color:#666;
+}
+
+.ai-container{
+    max-width:900px;
+    margin:0 auto;
+}
+
+.ai-card-main{
+    background:white;
+    border-radius:20px;
+    padding:35px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.kukku-avatar{
+    width:90px;
+    height:90px;
+    margin:0 auto 15px;
+    border-radius:50%;
+    background:#0d6efd;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:42px;
+}
+
+.kukku-title{
+    text-align:center;
+}
+
+.kukku-title h2{
+    color:#0d6efd;
+    margin-bottom:5px;
+}
+
+.kukku-title p{
+    color:#666;
+}
+
+.chat-box{
+    margin-top:30px;
+    height:360px;
+    overflow-y:auto;
+    padding:20px;
+    background:#f5f8ff;
+    border-radius:15px;
+}
+
+.message{
+    padding:12px 16px;
+    border-radius:14px;
+    margin-bottom:15px;
+    max-width:75%;
+    line-height:1.5;
+}
+
+.ai-message{
+    background:white;
+    box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+
+.user-message{
+    background:#0d6efd;
+    color:white;
+    margin-left:auto;
+}
+
+.start-area{
+    text-align:center;
+    margin-top:25px;
+}
+
+.start-btn{
+    border:none;
+    background:#0d6efd;
+    color:white;
+    padding:15px 30px;
+    border-radius:12px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.start-btn:hover{
+    background:#0056d2;
+}
+
+.mic-status{
+    margin-top:12px;
+    color:#666;
+    font-size:14px;
+}
+
+.mic-button{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    border:none;
+    background:#eef4ff;
+    color:#0d6efd;
+    font-size:24px;
+    cursor:pointer;
+    margin-left:10px;
+}
+
+.mic-button:hover{
+    background:#dbeafe;
+}
+
+.input-area{
+    display:flex;
+    align-items:center;
+    margin-top:20px;
+}
+
+.input-area input{
+    flex:1;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-family:Poppins,sans-serif;
+    outline:none;
+}
+
+.send-button{
+    margin-left:10px;
+    padding:13px 20px;
+    border:none;
+    border-radius:10px;
+    background:#0d6efd;
+    color:white;
+    cursor:pointer;
+}
+
+@media(max-width:900px){
+
+    .ai-page{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        width:100%;
+        min-height:auto;
+    }
+
+    .ai-main{
+        padding:20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="ai-page">
+
+
+<!-- ================= SIDEBAR ================= -->
+
+<div class="sidebar">
+
+<h2>
+
+<i class="fa-solid fa-pills"></i>
+
+Smart Medicine AI
+
+</h2>
+
+
+<ul>
+
+<li>
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+Dashboard
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="medicines.html">
+
+<i class="fa-solid fa-capsules"></i>
+
+Medicines
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="analytics.html">
+
+<i class="fa-solid fa-chart-line"></i>
+
+Analytics
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="caregiver.html">
+
+<i class="fa-solid fa-user-doctor"></i>
+
+Caregiver
+
+</a>
+
+</li>
+
+
+<li>
+
+<a href="profile.html">
+
+<i class="fa-solid fa-user"></i>
+
+Profile
+
+</a>
+
+</li>
+
+
+</ul>
+
+</div>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="ai-main">
+
+
+<div class="ai-header">
+
+<div>
+
+<h1>
+
+AI Healthcare Assistant 🤖
+
+</h1>
+
+<p>
+
+Talk with Kukku, your healthcare assistant.
+
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="ai-container">
+
+
+<div class="ai-card-main">
+
+
+<div class="kukku-avatar">
+
+<i class="fa-solid fa-robot"></i>
+
+</div>
+
+
+<div class="kukku-title">
+
+<h2>
+
+Kukku
+
+</h2>
+
+<p>
+
+AI Healthcare Assistant
+
+</p>
+
+</div>
+
+
+
+<!-- ================= CHAT ================= -->
+
+<div
+class="chat-box"
+id="chatBox">
+
+<div class="message ai-message">
+
+Hello! 👋 I am <strong>Kukku</strong>, your AI healthcare assistant.
+
+</div>
+
+<div class="message ai-message">
+
+You can start a conversation with me using your microphone or by typing below.
+
+</div>
+
+</div>
+
+
+
+<!-- ================= START ================= -->
+
+<div class="start-area">
+
+<button
+class="start-btn"
+onclick="startConversation()">
+
+<i class="fa-solid fa-microphone"></i>
+
+Start Conversation
+
+</button>
+
+
+<div
+class="mic-status"
+id="micStatus">
+
+Press the button to start speaking.
+
+</div>
+
+</div>
+
+
+
+<!-- ================= INPUT ================= -->
+
+<div class="input-area">
+
+<input
+type="text"
+id="userInput"
+placeholder="Type your message...">
+
+<button
+class="send-button"
+onclick="sendMessage()">
+
+<i class="fa-solid fa-paper-plane"></i>
+
+</button>
+
+
+<button
+class="mic-button"
+onclick="startListening()">
+
+<i class="fa-solid fa-microphone"></i>
+
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+
+/* =========================
+   CHAT
+========================= */
+
+function addMessage(text,type){
+
+const chatBox =
+document.getElementById("chatBox");
+
+const message =
+document.createElement("div");
+
+message.className =
+"message " +
+(type === "user"
+? "user-message"
+: "ai-message");
+
+message.textContent =
+text;
+
+chatBox.appendChild(message);
+
+chatBox.scrollTop =
+chatBox.scrollHeight;
+
+}
+
+
+
+/* =========================
+   SEND MESSAGE
+========================= */
+
+function sendMessage(){
+
+const input =
+document.getElementById("userInput");
+
+const text =
+input.value.trim();
+
+if(!text){
+
+return;
+
+}
+
+addMessage(
+text,
+"user"
+);
+
+input.value = "";
+
+
+/*
+   This is the connection point
+   for Sarvagya's Kukku AI backend.
+*/
+
+sendToKukku(text);
+
+}
+
+
+
+/* =========================
+   KUKKU CONNECTION
+========================= */
+
+async function sendToKukku(message){
+
+/*
+   IMPORTANT:
+
+   When Sarvagya provides the actual
+   Kukku AI API/backend endpoint,
+   put that endpoint here.
+
+   Example:
+
+   const response = await fetch(
+       "YOUR_KUKKU_API_URL",
+       {
+           method:"POST",
+           headers:{
+               "Content-Type":
+               "application/json"
+           },
+           body:JSON.stringify({
+               message:message
+           })
+       }
+   );
+
+   const data = await response.json();
+
+   addMessage(data.reply,"ai");
+*/
+
+
+/*
+   Temporary response until
+   Sarvagya's actual AI backend
+   is connected.
+*/
+
+setTimeout(function(){
+
+addMessage(
+"Kukku is ready to receive your message. The AI backend connection will be added when Sarvagya's AI endpoint is connected.",
+"ai"
+);
+
+},500);
+
+}
+
+
+
+/* =========================
+   START CONVERSATION
+========================= */
+
+function startConversation(){
+
+startListening();
+
+}
+
+
+
+/* =========================
+   VOICE RECOGNITION
+========================= */
+
+function startListening(){
+
+const SpeechRecognition =
+window.SpeechRecognition ||
+window.webkitSpeechRecognition;
+
+
+if(!SpeechRecognition){
+
+alert(
+"Voice recognition is not supported in this browser. Please use Google Chrome."
+);
+
+return;
+
+}
+
+
+const recognition =
+new SpeechRecognition();
+
+
+recognition.lang =
+"en-IN";
+
+recognition.continuous =
+false;
+
+recognition.interimResults =
+false;
+
+
+const status =
+document.getElementById(
+"micStatus"
+);
+
+
+status.textContent =
+"🎙️ Listening...";
+
+
+recognition.start();
+
+
+recognition.onresult =
+function(event){
+
+const text =
+event.results[0][0].transcript;
+
+
+status.textContent =
+"You said: " + text;
+
+
+addMessage(
+text,
+"user"
+);
+
+
+sendToKukku(text);
+
+};
+
+
+recognition.onerror =
+function(event){
+
+console.error(
+"Voice recognition error:",
+event.error
+);
+
+status.textContent =
+"Microphone error. Please try again.";
+
+};
+
+
+recognition.onend =
+function(){
+
+if(
+status.textContent ===
+"🎙️ Listening..."
+){
+
+status.textContent =
+"Press the button to speak again.";
+
+}
+
+};
+
+}
+
+
+
+/* =========================
+   ENTER KEY
+========================= */
+
+document
+.getElementById("userInput")
+.addEventListener(
+"keydown",
+function(event){
+
+if(event.key === "Enter"){
+
+sendMessage();
+
+}
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>
